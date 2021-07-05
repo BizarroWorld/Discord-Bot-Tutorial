@@ -7,6 +7,8 @@ const prefix = "-";
 const fs = require("fs");
 const path = require("path")
 
+require("dotenv).config()
+
 client.commands = new Discord.Collection();
 
 const commandFiles = fs
@@ -34,4 +36,4 @@ client.on("message", (message) => {
   }
 });
 
-client.login(your token);
+client.login(process.env.TOKEN);
