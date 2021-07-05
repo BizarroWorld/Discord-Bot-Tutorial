@@ -17,14 +17,15 @@ for (const file of commandFiles) {
   client.commands.set(command.name, command);
 }
 
-client.once("ready", () => {
+client.on("ready", () => {
   console.log("Project is ready!");
 });
 
 client.on("message", (message) => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
+  if(message.channel.type == "dm") return;
 
-  const args = message.content.slice(prefix.length).split(/ +/);
+  const args = message.content.slice(prefix.length).split(/ +/g);
   const command = args.shift().toLowerCase();
 
   if (command === "hello") {
