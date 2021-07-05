@@ -5,6 +5,7 @@ const client = new Discord.Client();
 const prefix = "-";
 
 const fs = require("fs");
+const path = require("path")
 
 client.commands = new Discord.Collection();
 
