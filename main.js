@@ -1,15 +1,19 @@
 const Discord = require("discord.js");
 
+// Define Client, Export it.
 const client = new Discord.Client();
 module.exports = client;
 
+// Define Prefix
 const prefix = "-";
 
 const fs = require("fs");
 const path = require("path")
 
+// Use Dotenv to Secure Token
 require("dotenv).config()
 
+// Start Command Handling Process
 client.commands = new Discord.Collection();
 
 const commandFiles = fs
@@ -21,6 +25,7 @@ for (const file of commandFiles) {
   client.commands.set(command.name, command);
 }
 
+// Listen For Messages
 client.on("message", (message) => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
   if(message.channel.type == "dm") return;
@@ -33,6 +38,7 @@ client.on("message", (message) => {
   }
 });
 
+// Event Handler
 readdirSync("./Events/").forEach((file) => {
   const events = readdirSync("./Events/").filter((file) =>
     file.endsWith(".js")
