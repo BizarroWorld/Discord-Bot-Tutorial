@@ -1,11 +1,19 @@
 const Discord = require("discord.js");
 
+// Define Client, Export it.
 const client = new Discord.Client();
+module.exports = client;
 
+// Define Prefix
 const prefix = "-";
 
 const fs = require("fs");
+const path = require("path")
 
+// Use Dotenv to Secure Token
+require("dotenv).config()
+
+// Start Command Handling Process
 client.commands = new Discord.Collection();
 
 const commandFiles = fs
@@ -17,14 +25,12 @@ for (const file of commandFiles) {
   client.commands.set(command.name, command);
 }
 
-client.once("ready", () => {
-  console.log("Project is ready!");
-});
-
+// Listen For Messages
 client.on("message", (message) => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
+  if(message.channel.type == "dm") return;
 
-  const args = message.content.slice(prefix.length).split(/ +/);
+  const args = message.content.slice(prefix.length).split(/ +/g);
   const command = args.shift().toLowerCase();
 
   if (command === "hello") {
@@ -32,4 +38,21 @@ client.on("message", (message) => {
   }
 });
 
-client.login(your token);
+// Event Handler
+readdirSync("./Events/").forEach((file) => {
+  const events = readdirSync("./Events/").filter((file) =>
+    file.endsWith(".js")
+  );
+
+  for (let file of events) {
+    let pull = require(`./Events/${file}`);
+
+    if (pull.name) {
+      client.events.set(pull.name, pull);
+    } else {
+      continue;
+    }
+  }
+});
+
+client.login(process.env.TOKEN);
