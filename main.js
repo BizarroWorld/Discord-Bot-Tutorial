@@ -21,10 +21,6 @@ for (const file of commandFiles) {
   client.commands.set(command.name, command);
 }
 
-client.on("ready", () => {
-  console.log("Project is ready!");
-});
-
 client.on("message", (message) => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
   if(message.channel.type == "dm") return;
